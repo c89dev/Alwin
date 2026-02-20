@@ -17,7 +17,12 @@ h1 {
     font-size: 4rem;
     color: var(--primary-accent-color);
 }
-.inputBar {
+h2{
+    font-family: Bahnschrift;
+    font-size: 2rem;
+    color: var(--primary-accent-color);
+}
+.searchBar {
     background-color: var(--primary-accent-color);
     padding: 3rem;
     width: 70%;
@@ -27,12 +32,37 @@ h1 {
     text-align: center;
     outline: white solid 2px;
 }
-.regBtn {
+.btnLarge {
 
     background-color: var(--primary-accent-color);
     padding: 3rem;
     width: 40%;
     font-size: 3rem;
+    text-align: center;
+    outline: white solid 2px;
+}
+.btnSmall {
+
+    background-color: var(--primary-accent-color);
+    padding: 1.5rem;
+    font-size: 1.5rem;
+    text-align: center;
+    outline: white solid 2px;
+}
+.registerForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    gap: 2rem;
+}
+.registerForm input {
+
+    background-color: var(--primary-accent-color);
+    padding: 1rem;
+    width: 90%;
+    font-size: 2rem;
+    border-radius: 999px;
     text-align: center;
     outline: white solid 2px;
 }
