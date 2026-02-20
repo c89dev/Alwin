@@ -1,0 +1,38 @@
+﻿:root {
+    --primary-bg-color: #0071b9;
+    --primary-accent-color: white;
+}
+body {
+    background-color: var(--primary-bg-color);
+}
+#app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4rem;
+    background-color: var(--primary-bg-color);
+}
+h1 {
+    font-family: Bahnschrift;
+    font-size: 4rem;
+    color: var(--primary-accent-color);
+}
+.inputBar {
+    background-color: var(--primary-accent-color);
+    padding: 3rem;
+    width: 70%;
+    max-width: 70%;
+    font-size: 3rem;
+    border-radius: 999px;
+    text-align: center;
+    outline: white solid 2px;
+}
+.regBtn {
+
+    background-color: var(--primary-accent-color);
+    padding: 3rem;
+    width: 40%;
+    font-size: 3rem;
+    text-align: center;
+    outline: white solid 2px;
+}
