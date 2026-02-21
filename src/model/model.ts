@@ -8,6 +8,9 @@ export const pageState = {currentPage: "home"};
 
 export const idCount = {idNumber: 0}; 
 
+export const searchResult: InventoryItem[] = [];
+
+
 export interface InventoryItem {
     id: number;
     name: string;
@@ -17,6 +20,6 @@ export interface InventoryItem {
     
 }
 
-const inventory = [
+export const inventory : InventoryItem[] = [
     
 ]
