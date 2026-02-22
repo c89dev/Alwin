@@ -1,4 +1,6 @@
-﻿import { pageState } from "./model/model"
+﻿// just a test 
+
+import { pageState } from "./model/model"
 import {RegisterInventoryItem} from "./controller/controller"; 
 import {FilterInventory} from "./controller/controller";
 import {searchResult} from "./model/model";
