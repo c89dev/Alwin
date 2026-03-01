@@ -1,124 +1,120 @@
 ﻿:root {
-    --primary-bg-color: #0071b9;
-    --primary-accent-color: white;
+  --primary-bg-color: #0071b9;
+  --primary-accent-color: white;
 }
 body {
-    margin: 0;
+  margin: 0;
 }
 /*@@@@@@@@ HEADER @@@@@@@@*/
 .headerContainer {
-    position: fixed; top: 0;
-    display: grid;
-    grid-template-areas: "back title nav";
-    grid-template-columns: 20vw 60vw 20vw;
-    background-color: var(--primary-bg-color);
-    box-shadow: 1px 5px 15px rgba(0,0,0,0.2);
+  position: fixed;
+  top: 0;
+  display: grid;
+  grid-template-areas: "back title nav";
+  grid-template-columns: 20vw 60vw 20vw;
+  background-color: var(--primary-bg-color);
+  box-shadow: 1px 5px 15px rgba(0, 0, 0, 0.2);
 }
 .headerContainer h1 {
-    grid-area: title;
-    text-align: center;
-    height: 60px;
+  grid-area: title;
+  text-align: center;
+  height: 60px;
 }
-.btnBack{
-    grid-area: back;
-    font-size: 5rem;
-    background-color: rgba(0,0,0,0);
-    border: none;
+.btnBack {
+  grid-area: back;
+  font-size: 5rem;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
 }
 /*@@@@@@@@ MAIN CONTENT @@@@@@@@*/
 #app {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: var(--primary-accent-color);
-    margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--primary-accent-color);
+  margin-top: 60px;
 }
-.homeContainer{
-    display: flex;
-    flex-direction: column;
-    max-width: 80%;
-    align-items: center;
-    gap: 4rem;
-    margin-top: 6rem;
+.homeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem;
+  margin-top: 6rem;
 }
 .hidden {
-    opacity: 0;
-    pointer-events: none;
+  opacity: 0;
+  pointer-events: none;
 }
 h1 {
-    font-family: Bahnschrift;
-    font-size: 3rem;
-    color: var(--primary-accent-color);
+  font-family: Bahnschrift;
+  font-size: 3rem;
+  color: var(--primary-accent-color);
 }
-h2{
-    font-family: Bahnschrift;
-    font-size: 2rem;
+h2 {
+  font-family: Bahnschrift;
+  font-size: 2rem;
 }
 .searchBar {
-    background-color: var(--primary-accent-color);
-    padding: 3rem;
-    font-size: 3rem;
-    border-radius: 999px;
-    text-align: center;
-    outline: white solid 2px;
+  background-color: var(--primary-accent-color);
+  padding: 3rem;
+  font-size: 3rem;
+  border-radius: 999px;
+  text-align: center;
+  outline: white solid 2px;
 }
-.resultCard{
-    display: flex;
-    width: 40vw;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: 2rem;
-    font-family: Bahnschrift;
-    background-color: var(--primary-bg-color);
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-    margin-top: 0.5rem;
-    border-radius: 1rem;
-    
+.resultCard {
+  display: flex;
+  width: 40vw;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 2rem;
+  font-family: Bahnschrift;
+  background-color: var(--primary-bg-color);
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  border-radius: 1rem;
 }
-.resultCard dt{
-    color: var(--primary-accent-color);
+.resultCard dt {
+  color: var(--primary-accent-color);
 }
-.resultCard dd{
-    background-color: var(--primary-accent-color);
-    padding: 0.6rem;
+.resultCard dd {
+  background-color: var(--primary-accent-color);
+  padding: 0.6rem;
 }
 
 .btnLarge {
-
-    background-color: var(--primary-accent-color);
-    padding: 3rem;
-    font-size: 3rem;
-    text-align: center;
-    outline: white solid 2px;
-    border-radius: 1rem;
+  background-color: var(--primary-accent-color);
+  padding: 3rem;
+  font-size: 3rem;
+  text-align: center;
+  outline: white solid 2px;
+  border-radius: 1rem;
 }
 .btnSmall {
-
-    background-color: var(--primary-accent-color);
-    padding: 1.5rem;
-    font-size: 1.5rem;
-    text-align: center;
-    outline: white solid 2px;
-    border-radius: 1rem;
-    background-color: var(--primary-bg-color);
-    color: white;
+  background-color: var(--primary-accent-color);
+  padding: 1.5rem;
+  font-size: 1.5rem;
+  text-align: center;
+  outline: white solid 2px;
+  border-radius: 1rem;
+  background-color: var(--primary-bg-color);
+  color: white;
 }
-.registerForm{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 80%;
-    gap: 2rem;
-    margin-bottom: 2rem;
+.registerForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  gap: 2rem;
+  margin-bottom: 2rem;
 }
 .registerForm input {
-
-    background-color: var(--primary-accent-color);
-    padding: 1rem;
-    width: 90%;
-    font-size: 2rem;
-    border-radius: 999px;
-    text-align: center;
-    outline: white solid 2px;
+  background-color: var(--primary-accent-color);
+  padding: 1rem;
+  width: 90%;
+  font-size: 2rem;
+  border-radius: 999px;
+  text-align: center;
+  outline: white solid 2px;
 }
+

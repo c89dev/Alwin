@@ -1,0 +1,16 @@
+[
+    {
+    "id": 0,
+    "name": "Test Object",
+    "keywords": ["descr", "quality", "usecase"],
+    "sectionId": "A43",
+    "imageUrl": "wip"
+    },
+    {
+    "id": 1,
+    "name": "Test Object nr 2",
+    "keywords": ["another descr", "quality", "usecase"],
+    "sectionId": "B43",
+    "imageUrl": "wip"
+    }
+]
