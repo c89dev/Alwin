@@ -1,20 +1,33 @@
-import { Model, InventoryItem, Dispatch } from "./types";
+import { InventoryItem, Dispatch } from "./types";
 import { currentRecords } from "./app";
+import { UpdateHeaderView } from "./headerCmp";
+import {
+  FilterInventory,
+  RegisterInventoryItem,
+  searchResult,
+  GetPage,
+  SetPage,
+} from "./controller";
 
-export function UpdateMainView(records: InventoryItem[], page: string): void {
+export function UpdateMainView(items: InventoryItem[], page: string): void {
+  console.log("UpdateMainView called, currentPage:", GetPage());
+  UpdateHeaderView();
+
+  const main = document.querySelector("#main");
   const content = document.createElement("div");
-  const app = document.querySelector("#app");
+  content.classList.add("mainContainer");
 
   if (page === "home") {
-    console.log(page);
     content.innerHTML = /*html*/ `
-        <container class="homeContainer">
             <form id="searchForm">
-                <input id="searchInput" class="searchBar" type="text" placeholder="🔎 Search for item">
+                <input id="searchInput" class="searchBar" 
+                type="text" placeholder="🔎 Search for item">
             </form>
             <button id="regBtn" class="btnLarge">➕ Register new item</button>
-        </container>
         `;
+
+    main?.replaceChildren(content);
+
     document
       .querySelector("#searchForm")
       ?.addEventListener("submit", (event) => {
@@ -23,22 +36,19 @@ export function UpdateMainView(records: InventoryItem[], page: string): void {
           "searchInput",
         ) as HTMLInputElement;
         const searchValue = searchInput.value;
-        console.log(searchValue);
-        console.log("Submitted search:" + searchValue);
+        console.log("Submitted search: " + searchValue);
         FilterInventory(searchValue);
       });
-    document.querySelector("#regBtn")?.addEventListener("click", (event) => {});
-    app?.replaceChildren(content);
+    document.querySelector("#regBtn")?.addEventListener("click", (event) => {
+      SetPage("register");
+      UpdateMainView(currentRecords, GetPage());
+    });
   }
 
   if (page === "searchResult") {
-    const content = /*html*/ `
-            <h2>Results</h2>
-        `;
-
     if (searchResult.length > 0) {
       searchResult.forEach((item) => {
-        app.innerHTML += /*html*/ `
+        content.innerHTML += /*html*/ `
             <article class="resultCard">
             <button>❌</button>
                 <dt>Item:</dt>
@@ -52,24 +62,36 @@ export function UpdateMainView(records: InventoryItem[], page: string): void {
         `;
       });
     } else {
-      content.innerHTML += `
+      content.innerHTML = `
             <h2>No results</h2>
             `;
     }
+
+    main?.replaceChildren(content);
     searchResult.length = 0;
   }
 
   if (page === "register") {
-    app.innerHTML = /*html*/ `
+    content.innerHTML = /*html*/ `
         <h2>Add a new item to inventory</h2>
         <form class="registerForm">
-            <input id="nameInput" class="formInput" type="text" placeholder="Name of item">
-            <input id="keywordInput" class="formInput" type="text" placeholder="Keywords (separate by space)">
-            <input id="sectionInput" class="formInput" type="text" placeholder="Section/shelf ID">
-            <input id="imageInput" class="formInput" type="text" placeholder="Image URL (WIP)">
+            <input id="nameInput" class="formInput" type="text" 
+            placeholder="Name of item">
+
+            <input id="keywordInput" class="formInput" type="text" 
+            placeholder="Keywords (separate by space)">
+            
+            <input id="sectionInput" class="formInput" type="text" 
+            placeholder="Section/shelf ID">
+
+            <input id="imageInput" class="formInput" type="text" 
+            placeholder="Image URL (WIP)">
         </form>
         <button id="submitBtn" class="btnSmall">Add item to inventory</button>
         `;
+
+    main?.replaceChildren(content);
+
     document.querySelector("#submitBtn")?.addEventListener("click", (event) => {
       const nameInput = document.querySelector(
         "#nameInput",
@@ -90,6 +112,7 @@ export function UpdateMainView(records: InventoryItem[], page: string): void {
         "#imageInput",
       ) as HTMLInputElement;
       const imageValue = imageInput.value;
+
       RegisterInventoryItem(nameValue, keywordValue, sectionValue, imageValue);
     });
   }

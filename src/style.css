@@ -5,8 +5,17 @@
 body {
   margin: 0;
 }
+#app {
+  height: 100vh;
+  display: grid;
+  grid-template-areas:
+    "header"
+    "main";
+  grid-template-rows: 20vh 80vh;
+}
 /*@@@@@@@@ HEADER @@@@@@@@*/
 .headerContainer {
+  grid-area: header;
   position: fixed;
   top: 0;
   display: grid;
@@ -27,18 +36,12 @@ body {
   border: none;
 }
 /*@@@@@@@@ MAIN CONTENT @@@@@@@@*/
-#app {
-  display: flex;
-  flex-direction: column;
-  background-color: var(--primary-accent-color);
-  margin-top: 60px;
-}
-.homeContainer {
+.mainContainer {
+  grid-area: main;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4rem;
-  margin-top: 6rem;
+  gap: 2rem;
 }
 .hidden {
   opacity: 0;
@@ -117,4 +120,3 @@ h2 {
   text-align: center;
   outline: white solid 2px;
 }
-

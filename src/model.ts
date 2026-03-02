@@ -1,30 +1,30 @@
 import path from "path";
 import fs from "fs";
-import { fileurltopath } from "url";
-import type { model, inventoryitem } from "./types";
+import { fileURLToPath } from "url";
+import type { Model, InventoryItem } from "./types";
 
-const __filename = fileurltopath(import.meta.url);
+const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const data_path = path.join(
+const DATA_PATH = path.join(
   __dirname,
   "..",
   "database",
   "inventoryrecord.json",
 );
 
-const model: model = {
-  records: [] as inventoryitem[],
-  searchresult: [] as inventoryitem[],
-  currentpage: "home",
+const model: Model = {
+  records: [] as InventoryItem[],
+  searchResult: [] as InventoryItem[],
+  currentPage: "home",
 
   init: () => {
-    const filecontent = fs.readfilesync(data_path, "utf-8");
-    const loadrecords = json.parse(filecontent) as inventoryitem[];
-    model.records = structuredclone(loadrecords);
+    const fileContent = fs.readFileSync(DATA_PATH, "utf-8");
+    const loadRecords = JSON.parse(fileContent) as InventoryItem[];
+    model.records = structuredClone(loadRecords);
   },
 
-  getall: () => {
+  getAll: () => {
     return model.records;
   },
 

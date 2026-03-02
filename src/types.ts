@@ -8,7 +8,6 @@ export interface Model {
 }
 
 export interface InventoryItem {
-  id: number;
   name: string;
   keywords: string[];
   sectionId: string;
