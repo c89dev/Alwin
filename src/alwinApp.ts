@@ -39,6 +39,8 @@ export function mountApp(state: AppState) {
                 "ID: ",
                 msg.newInventoryItem.id,
             );
+        } else if (msg.type === "delete") {
+            deleteItem(state, msg);
         }
         render();
     }
@@ -72,4 +74,13 @@ export function mountApp(state: AppState) {
         }
     }
     render();
+}
+
+function deleteItem(state: AppState, msg: Msg) {
+    if (msg.type === "delete") {
+        console.log("Yeeting entry ID: ", msg.id);
+        state.inventoryItems = state.inventoryItems.filter(
+            (item) => item.id !== msg.id,
+        );
+    }
 }

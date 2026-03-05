@@ -11,6 +11,21 @@ export function createListView(
     const itemsHtml = buildInventoryItemsHtml(inventory, searchQuery);
     root.innerHTML = itemsHtml;
 
+    const deleteButtons = root.querySelectorAll<HTMLButtonElement>(
+        'button[data-action="delete"]',
+    )!;
+
+    deleteButtons.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+            const dataId = btn.getAttribute("data-id");
+            const id = Number(dataId);
+            if (id) {
+                console.log("trying to del: ", id);
+                dispatch({ type: "delete", id });
+            }
+        });
+    });
+
     return root;
 }
 
@@ -25,7 +40,7 @@ function buildInventoryItemsHtml(
         .map((item) => {
             return /*html*/ `
             <article class="resultCard">
-            <button id="delBtn" class="btnSmall">❌</button>
+            <button id="delBtn" class="btnSmall" data-action="delete" data-id="${item.id}">❌</button>
                 <dt>Item:</dt>
                 <dd>${item.title}</dd>
                 <dt>Keywords:</dt>

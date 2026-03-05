@@ -22,6 +22,7 @@ export type Msg =
     | { type: "search"; query: string }
     | { type: "items-loaded"; inventoryItems: InventoryItem[] }
     | { type: "id-counter-loaded"; currentCount: number }
+    | { type: "delete"; id: number }
     | { type: "submit-item-reg"; newInventoryItem: InventoryItem };
 
 export type Dispatch = (msg: Msg) => void;
