@@ -1,22 +1,23 @@
 import { createHeaderView } from "./headerView";
 import { createHomeView } from "./homeView";
+import { createListView } from "./listView";
 import { createRegisterView } from "./regView";
 import { createInitialAppState } from "./model";
 import type { InventoryItem, AppState, Msg } from "./types";
 //API
 import { loadInventoryFromDisk, loadIdCounterFromDisk } from "./api";
 
-export function mountApp() {
+export function mountApp(state: AppState) {
     const root = document.getElementById("app");
-    const state: AppState = createInitialAppState();
 
     function dispatch(msg: Msg): void {
         if (msg.type === "home") {
             state.view = "home";
         } else if (msg.type === "register") {
             state.view = "register";
-        } else if (msg.type === "submit") {
-            console.log("Clicked on submit yo");
+        } else if (msg.type === "search") {
+            state.currentSearch = msg.query;
+            state.view = "list";
         } else if (msg.type === "items-loaded") {
             state.inventoryItems = msg.inventoryItems;
             console.log("Inventory data loaded");
@@ -62,6 +63,9 @@ export function mountApp() {
         if (state.view === "home") {
             const homeView = createHomeView(dispatch);
             root?.replaceChildren(header, homeView);
+        } else if (state.view === "list") {
+            const listView = createListView(state, dispatch);
+            root?.replaceChildren(header, listView);
         } else if (state.view === "register") {
             const regView = createRegisterView(state, dispatch);
             root?.replaceChildren(header, regView);

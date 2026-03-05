@@ -5,6 +5,7 @@ export function createInitialAppState(): AppState {
         view: "home",
         inventoryItems: [],
         currentTargetId: null,
+        currentSearch: "",
         nextId: 0,
     };
 }

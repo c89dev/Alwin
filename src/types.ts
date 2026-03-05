@@ -4,6 +4,7 @@ export type AppState = {
     view: AppView;
     inventoryItems: InventoryItem[];
     currentTargetId: string | null;
+    currentSearch: string;
     nextId: number;
 };
 
@@ -18,9 +19,9 @@ export type InventoryItem = {
 export type Msg =
     | { type: "home" }
     | { type: "register" }
-    | { type: "submit" }
+    | { type: "search"; query: string }
     | { type: "items-loaded"; inventoryItems: InventoryItem[] }
-    | { type: "id-counter-loaded"; currentCount: Number }
+    | { type: "id-counter-loaded"; currentCount: number }
     | { type: "submit-item-reg"; newInventoryItem: InventoryItem };
 
 export type Dispatch = (msg: Msg) => void;

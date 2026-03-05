@@ -12,7 +12,15 @@ export function createHomeView(dispatch: Dispatch): HTMLElement {
             <button id="regBtn" class="btnLarge">➕ Register new item</button>
         `;
 
+    const searchForm = root.querySelector<HTMLFormElement>("#searchForm");
     const searchInput = root.querySelector<HTMLInputElement>("#searchInput")!;
+
+    searchForm.addEventListener("submit", (event) => {
+        const input = searchInput.value;
+        console.log("User input: ", input);
+        dispatch({ type: "search", query: input });
+    });
+
     const regBtn = root.querySelector<HTMLInputElement>("#regBtn")!;
 
     regBtn.addEventListener("click", (event) => {

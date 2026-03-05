@@ -5,6 +5,8 @@
 body {
     margin: 0;
 }
+.dummy {
+}
 #app {
     height: 100vh;
     display: grid;

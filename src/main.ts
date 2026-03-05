@@ -1,2 +1,6 @@
 import { mountApp } from "./alwinApp";
-mountApp();
+import { createInitialAppState } from "./model";
+import type { AppState } from "./types";
+
+const state: AppState = createInitialAppState();
+mountApp(state);

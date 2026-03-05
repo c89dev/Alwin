@@ -36,7 +36,7 @@ export function createRegisterView(
         const newInventoryItem: InventoryItem = {
             id: 0,
             title: data.get("title") as string,
-            keywords: (data.get("keywords") as string).split(""),
+            keywords: (data.get("keywords") as string).split(" "),
             sectionId: data.get("sectionId") as string,
             imageUrl: data.get("image") as string,
         };
@@ -46,40 +46,3 @@ export function createRegisterView(
 
     return root;
 }
-
-// function addItemToWorkingInventory(
-//     title: string,
-//     keyword: string,
-//     section: string,
-//     image: string,
-// ) {}
-//
-//     document.querySelector("#submitBtn")?.addEventListener("click", (event) => {
-//         const nameInput = document.querySelector(
-//             "#nameInput",
-//         ) as HTMLInputElement;
-//         const nameValue = nameInput.value;
-//
-//         const keywordInput = document.querySelector(
-//             "#keywordInput",
-//         ) as HTMLInputElement;
-//         const keywordValue = keywordInput.value.split(" ");
-//
-//         const sectionInput = document.querySelector(
-//             "#sectionInput",
-//         ) as HTMLInputElement;
-//         const sectionValue = sectionInput.value;
-//
-//         const imageInput = document.querySelector(
-//             "#imageInput",
-//         ) as HTMLInputElement;
-//         const imageValue = imageInput.value;
-//
-//         RegisterInventoryItem(
-//             nameValue,
-//             keywordValue,
-//             sectionValue,
-//             imageValue,
-//         );
-//     });
-// }

@@ -1,18 +1,27 @@
-import type { InventoryItem, Dispatch } from "./types";
+import type { InventoryItem, Dispatch, AppState } from "./types";
 
 export function createListView(
-    inventoryItems: InventoryItem[],
+    state: AppState,
     dispatch: Dispatch,
 ): HTMLElement {
+    const inventory = state.inventoryItems;
+    var searchQuery = state.currentSearch;
     const root = document.createElement("section");
-    root.classList.add("mainContainer");
-    const itemsHtml = buildInventoryItemsHtml(inventoryItems);
+    root.classList.add("mainContainer", "dummy");
+    const itemsHtml = buildInventoryItemsHtml(inventory, searchQuery);
+    root.innerHTML = itemsHtml;
 
     return root;
 }
 
-function buildInventoryItemsHtml(inventoryItems: InventoryItem[]): string {
+function buildInventoryItemsHtml(
+    inventoryItems: InventoryItem[],
+    searchQuery: string,
+): string {
     return inventoryItems
+        .filter((item) =>
+            item.title.toLowerCase().includes(searchQuery.toLowerCase()),
+        )
         .map((item) => {
             return /*html*/ `
             <article class="resultCard">
