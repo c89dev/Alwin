@@ -4,9 +4,9 @@ export function createListView(
     state: AppState,
     dispatch: Dispatch,
 ): HTMLElement {
+    const root = document.createElement("section");
     const inventory = state.inventoryItems;
     var searchQuery = state.currentSearch;
-    const root = document.createElement("section");
     root.classList.add("mainContainer", "dummy");
     const itemsHtml = buildInventoryItemsHtml(inventory, searchQuery);
     root.innerHTML = itemsHtml;

@@ -5,7 +5,12 @@ import { createRegisterView } from "./regView";
 import { createInitialAppState } from "./model";
 import type { InventoryItem, AppState, Msg } from "./types";
 //API
-import { loadInventoryFromDisk, loadIdCounterFromDisk } from "./api";
+import {
+    loadInventoryFromDisk,
+    loadIdCounterFromDisk,
+    saveInventoryToDisk,
+    saveIdCountToDisk,
+} from "./api";
 
 export function mountApp(state: AppState) {
     const root = document.getElementById("app");
@@ -32,13 +37,8 @@ export function mountApp(state: AppState) {
             state.nextId++;
             msg.newInventoryItem.id = state.nextId;
             state.inventoryItems.push(msg.newInventoryItem);
-            // state.view = "home";
-            console.log(
-                "pushed ",
-                msg.newInventoryItem.title,
-                "ID: ",
-                msg.newInventoryItem.id,
-            );
+            saveInventoryToDisk(state.inventoryItems);
+            saveIdCountToDisk(state.nextId);
         } else if (msg.type === "delete") {
             deleteItem(state, msg);
         }
@@ -83,4 +83,5 @@ function deleteItem(state: AppState, msg: Msg) {
             (item) => item.id !== msg.id,
         );
     }
+    saveInventoryToDisk(state.inventoryItems);
 }

@@ -16,20 +16,47 @@ const DATA_PATH = path.join(
 
 const ID_PATH = path.join(__dirname, "..", "database", "idcounter.json");
 
-const idCounter = fs.readFileSync(ID_PATH, "utf-8");
-const fileContent = fs.readFileSync(DATA_PATH, "utf-8");
-
 // Server Instance
 
 const server = http.createServer((req, res) => {
     if (req.url === "/api/loadinventory" && req.method === "GET") {
+        const fileContent = fs.readFileSync(DATA_PATH, "utf-8");
         res.writeHead(200, { "Content-Type": "application/json" });
         const data = JSON.parse(fileContent);
         res.end(JSON.stringify(data));
-    } else if (req.url === "/api/idcount" && req.method === "GET") {
+    } else if (req.url === "/api/loadidcount" && req.method === "GET") {
+        const idCounter = fs.readFileSync(ID_PATH, "utf-8");
         res.writeHead(200, { "Content-Type": "application/json" });
         const data = JSON.parse(idCounter);
         res.end(JSON.stringify(data));
+    } else if (req.url === "/api/saveinventory" && req.method === "POST") {
+        let body = "";
+
+        req.on("data", (chunk) => {
+            body += chunk.toString();
+        });
+        req.on("end", () => {
+            const data = JSON.parse(body);
+
+            fs.writeFileSync(DATA_PATH, JSON.stringify(data, null, 2));
+
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ success: true }));
+        });
+    } else if (req.url === "/api/saveidcount" && req.method === "POST") {
+        let body = "";
+
+        req.on("data", (chunk) => {
+            body += chunk.toString();
+        });
+        req.on("end", () => {
+            const data = JSON.parse(body);
+
+            fs.writeFileSync(ID_PATH, JSON.stringify(data, null, 2));
+
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ success: true }));
+        });
     } else {
         res.writeHead(404);
         res.end(JSON.stringify({ message: "blyat" }));
