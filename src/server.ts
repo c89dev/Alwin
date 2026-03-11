@@ -1,68 +1,127 @@
-﻿import http from "http";
-import path from "path";
-import fs from "fs";
-import { fileURLToPath } from "url";
+﻿import http from "node:http";
+import path from "node:path";
+import fs from "node:fs";
+import { fileURLToPath } from "node:url";
+
 import type { InventoryItem } from "./types";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const DATA_PATH = path.join(
-    __dirname,
-    "..",
-    "database",
-    "inventoryrecord.json",
-);
+/* ---------------- ROOT + DATA PATHS ---------------- */
 
-const ID_PATH = path.join(__dirname, "..", "database", "idcounter.json");
+const ROOT = path.resolve(__dirname, "..");
+const DATA_DIR = path.join(ROOT, "data");
 
-// Server Instance
+const INVENTORY_PATH = path.join(DATA_DIR, "inventory.json");
+const ID_PATH = path.join(DATA_DIR, "idcounter.json");
+
+/* ---------------- HELPER FUNCTIONS ---------------- */
+
+function sendJSON(res: http.ServerResponse, data: unknown, status = 200) {
+    res.writeHead(status, { "Content-Type": "application/json" });
+    res.end(JSON.stringify(data));
+}
+
+function readJSON(filePath: string) {
+    const file = fs.readFileSync(filePath, "utf-8");
+    return JSON.parse(file);
+}
+
+function writeJSON(filePath: string, data: unknown) {
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+}
+
+function enableCORS(res: http.ServerResponse) {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+}
+
+/* ---------------- SERVER ---------------- */
 
 const server = http.createServer((req, res) => {
-    if (req.url === "/api/loadinventory" && req.method === "GET") {
-        const fileContent = fs.readFileSync(DATA_PATH, "utf-8");
-        res.writeHead(200, { "Content-Type": "application/json" });
-        const data = JSON.parse(fileContent);
-        res.end(JSON.stringify(data));
-    } else if (req.url === "/api/loadidcount" && req.method === "GET") {
-        const idCounter = fs.readFileSync(ID_PATH, "utf-8");
-        res.writeHead(200, { "Content-Type": "application/json" });
-        const data = JSON.parse(idCounter);
-        res.end(JSON.stringify(data));
-    } else if (req.url === "/api/saveinventory" && req.method === "POST") {
-        let body = "";
+    enableCORS(res);
 
-        req.on("data", (chunk) => {
-            body += chunk.toString();
-        });
-        req.on("end", () => {
-            const data = JSON.parse(body);
+    /* Preflight request (browser CORS check) */
+    if (req.method === "OPTIONS") {
+        res.writeHead(204);
+        res.end();
+        return;
+    }
 
-            fs.writeFileSync(DATA_PATH, JSON.stringify(data, null, 2));
+    const url = req.url ?? "";
 
-            res.writeHead(200, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ success: true }));
-        });
-    } else if (req.url === "/api/saveidcount" && req.method === "POST") {
-        let body = "";
+    try {
+        /* -------- INVENTORY -------- */
 
-        req.on("data", (chunk) => {
-            body += chunk.toString();
-        });
-        req.on("end", () => {
-            const data = JSON.parse(body);
+        if (req.method === "GET" && url === "/api/inventory") {
+            const data: InventoryItem[] = readJSON(INVENTORY_PATH);
+            sendJSON(res, data);
+            return;
+        }
 
-            fs.writeFileSync(ID_PATH, JSON.stringify(data, null, 2));
+        if (req.method === "POST" && url === "/api/inventory") {
+            let body = "";
 
-            res.writeHead(200, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ success: true }));
-        });
-    } else {
-        res.writeHead(404);
-        res.end(JSON.stringify({ message: "blyat" }));
+            req.on("data", (chunk) => {
+                body += chunk.toString();
+            });
+
+            req.on("end", () => {
+                try {
+                    const data = JSON.parse(body);
+                    writeJSON(INVENTORY_PATH, data);
+                    sendJSON(res, { success: true });
+                } catch {
+                    sendJSON(res, { error: "Invalid JSON" }, 400);
+                }
+            });
+
+            return;
+        }
+
+        /* -------- ID COUNTER -------- */
+
+        if (req.method === "GET" && url === "/api/idcounter") {
+            const data = readJSON(ID_PATH);
+            sendJSON(res, data);
+            return;
+        }
+
+        if (req.method === "POST" && url === "/api/idcounter") {
+            let body = "";
+
+            req.on("data", (chunk) => {
+                body += chunk.toString();
+            });
+
+            req.on("end", () => {
+                try {
+                    const data = JSON.parse(body);
+                    writeJSON(ID_PATH, data);
+                    sendJSON(res, { success: true });
+                } catch {
+                    sendJSON(res, { error: "Invalid JSON" }, 400);
+                }
+            });
+
+            return;
+        }
+
+        /* -------- 404 -------- */
+
+        sendJSON(res, { error: "Not Found" }, 404);
+    } catch (err) {
+        console.error("Server error:", err);
+        sendJSON(res, { error: "Server error" }, 500);
     }
 });
 
-server.listen(3000, () => {
-    console.log("Server is running on http://localhost:3000");
+/* ---------------- START SERVER ---------------- */
+
+const PORT = 3000;
+
+server.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
 });

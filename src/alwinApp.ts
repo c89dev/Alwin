@@ -26,9 +26,6 @@ export function mountApp(state: AppState) {
         } else if (msg.type === "items-loaded") {
             state.inventoryItems = msg.inventoryItems;
             console.log("Inventory data loaded");
-            state.inventoryItems.forEach((item) => {
-                console.log(item.title);
-            });
         } else if (msg.type === "id-counter-loaded") {
             console.log("Id counter loaded");
             state.nextId = msg.currentCount as number;
@@ -78,10 +75,15 @@ export function mountApp(state: AppState) {
 
 function deleteItem(state: AppState, msg: Msg) {
     if (msg.type === "delete") {
-        console.log("Yeeting entry ID: ", msg.id);
-        state.inventoryItems = state.inventoryItems.filter(
-            (item) => item.id !== msg.id,
-        );
+        const proceed = confirm("⚠️ Permanently delete item?");
+        if (!proceed) {
+            console.log("Cancel delete, returning");
+            return;
+        } else if (proceed) {
+            state.inventoryItems = state.inventoryItems.filter(
+                (item) => item.id !== msg.id,
+            );
+        }
+        saveInventoryToDisk(state.inventoryItems);
     }
-    saveInventoryToDisk(state.inventoryItems);
 }

@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "title": "Test Object",
+    "keywords": [
+      "descr",
+      "quality",
+      "usecase"
+    ],
+    "sectionId": "A43",
+    "imageUrl": "wip"
+  },
+  {
+    "id": 2,
+    "title": "caec",
+    "keywords": [
+      ""
+    ],
+    "sectionId": "asdasd",
+    "imageUrl": ""
+  }
+]
