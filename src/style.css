@@ -13,25 +13,27 @@ body {
     grid-template-areas:
         "header"
         "main";
-    grid-template-rows: auto 1fr; /* Adjusted for better layout */
+    grid-template-rows: 100px 1fr;
 }
-/*@@@@@@@@ HEADER @@@@@@@@*/
 .headerContainer {
     grid-area: header;
-    position: sticky; /* Changed to sticky */
+    position: fixed;
     top: 0;
+    left: 0;
+    width: 100%;
     display: grid;
     grid-template-areas: "back title nav";
     grid-template-columns: 20vw 60vw 20vw;
     background-color: var(--primary-bg-color);
     box-shadow: 1px 5px 15px rgba(0, 0, 0, 0.2);
-    z-index: 10; /* Ensure it stays on top */
+    z-index: 10;
+    padding: 1rem;
 }
 .headerContainer h1 {
     grid-area: title;
     text-align: center;
-    height: 60px;
-    margin: 0; /* Remove margin to avoid extra spacing */
+    margin: 0;
+    line-height: 60px;
 }
 .btnBack {
     grid-area: back;
@@ -39,14 +41,13 @@ body {
     background-color: rgba(0, 0, 0, 0);
     border: none;
 }
-/*@@@@@@@@ MAIN CONTENT @@@@@@@@*/
 .mainContainer {
     grid-area: main;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2rem;
-    padding-top: 80px; /* Adjusted padding to avoid content overlap */
+    margin-top: 100px;
 }
 .hidden {
     opacity: 0;
@@ -68,7 +69,7 @@ h2 {
     border-radius: 999px;
     text-align: center;
     outline: white solid 2px;
-    width: 80%; /* Ensure it’s not too wide */
+    width: 80%;
 }
 .resultCard {
     display: flex;
@@ -95,7 +96,6 @@ h2 {
     align-self: end;
     padding: 1rem;
 }
-
 .btnLarge {
     background-color: var(--primary-accent-color);
     padding: 3rem;
