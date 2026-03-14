@@ -66,6 +66,7 @@ h2 {
     border-radius: 999px;
     text-align: center;
     outline: white solid 2px;
+    margin-top: 4rem;
 }
 .resultCard {
     display: flex;

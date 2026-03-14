@@ -15,8 +15,11 @@ export function createHomeView(dispatch: Dispatch): HTMLElement {
     const searchForm = root.querySelector<HTMLFormElement>("#searchForm");
     const searchInput = root.querySelector<HTMLInputElement>("#searchInput")!;
 
+    if (!searchForm || !searchInput) return root;
+
     searchForm.addEventListener("submit", (event) => {
         event.preventDefault();
+
         const input = searchInput.value;
         console.log("User input: ", input);
         dispatch({ type: "search", query: input });

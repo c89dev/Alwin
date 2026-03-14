@@ -34,8 +34,12 @@ function buildInventoryItemsHtml(
     searchQuery: string,
 ): string {
     return inventoryItems
-        .filter((item) =>
-            item.title.toLowerCase().includes(searchQuery.toLowerCase()),
+        .filter(
+            (item) =>
+                item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                item.keywords.some((kw) =>
+                    kw.toLowerCase().includes(searchQuery.toLowerCase()),
+                ),
         )
         .map((item) => {
             return /*html*/ `

@@ -31,6 +31,7 @@ export function createRegisterView(
     const submitBtn = root.querySelector<HTMLButtonElement>("#submitBtn");
 
     submitBtn?.addEventListener("click", (event) => {
+        event.preventDefault();
         const form = document.querySelector<HTMLFormElement>("#registerForm")!;
         const data = new FormData(form);
         const newInventoryItem: InventoryItem = {

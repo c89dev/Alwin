@@ -1,31 +1,17 @@
 [
-  {
-    "id": 1,
-    "title": "Test Object",
-    "keywords": [
-      "descr",
-      "quality",
-      "usecase"
-    ],
-    "sectionId": "A43",
-    "imageUrl": "wip"
-  },
-  {
-    "id": 2,
-    "title": "caec",
-    "keywords": [
-      ""
-    ],
-    "sectionId": "asdasd",
-    "imageUrl": ""
-  },
-  {
-    "id": 2,
-    "title": "test",
-    "keywords": [
-      ""
-    ],
-    "sectionId": "",
-    "imageUrl": ""
-  }
+    {
+        "id": 1,
+        "title": "Test Object",
+        "keywords": ["descr", "quality", "usecase"],
+        "sectionId": "A43",
+        "imageUrl": "wip"
+    },
+    {
+        "id": 2,
+        "title": "L shaped skrujern test",
+        "keywords": ["skrur", ""],
+        "sectionId": "A4",
+        "imageUrl": "🪛"
+    }
 ]
+

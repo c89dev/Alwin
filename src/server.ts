@@ -1,22 +1,21 @@
 ﻿import http from "node:http";
 import path from "node:path";
 import fs from "node:fs";
-import { fileURLToPath } from "node:url";
 
 import type { InventoryItem } from "./types";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+/* ---------------- PATHS ---------------- */
 
-/* ---------------- ROOT + DATA PATHS ---------------- */
-
-const ROOT = path.resolve(__dirname, "..");
+const ROOT = process.cwd();
 const DATA_DIR = path.join(ROOT, "data");
+
+/* client files embedded in pkg snapshot */
+const CLIENT_DIR = path.resolve(__dirname, "../client");
 
 const INVENTORY_PATH = path.join(DATA_DIR, "inventory.json");
 const ID_PATH = path.join(DATA_DIR, "idcounter.json");
 
-/* ---------------- HELPER FUNCTIONS ---------------- */
+/* ---------------- HELPERS ---------------- */
 
 function sendJSON(res: http.ServerResponse, data: unknown, status = 200) {
     res.writeHead(status, { "Content-Type": "application/json" });
@@ -38,12 +37,39 @@ function enableCORS(res: http.ServerResponse) {
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 }
 
+function serveStatic(url: string, res: http.ServerResponse) {
+    let filePath =
+        url === "/"
+            ? path.join(CLIENT_DIR, "index.html")
+            : path.join(CLIENT_DIR, url);
+
+    if (!fs.existsSync(filePath)) return false;
+
+    const ext = path.extname(filePath);
+
+    const mime: Record<string, string> = {
+        ".html": "text/html",
+        ".js": "application/javascript",
+        ".css": "text/css",
+        ".svg": "image/svg+xml",
+        ".json": "application/json",
+    };
+
+    const contentType = mime[ext] || "application/octet-stream";
+
+    const file = fs.readFileSync(filePath);
+
+    res.writeHead(200, { "Content-Type": contentType });
+    res.end(file);
+
+    return true;
+}
+
 /* ---------------- SERVER ---------------- */
 
 const server = http.createServer((req, res) => {
     enableCORS(res);
 
-    /* Preflight request (browser CORS check) */
     if (req.method === "OPTIONS") {
         res.writeHead(204);
         res.end();
@@ -107,6 +133,12 @@ const server = http.createServer((req, res) => {
             });
 
             return;
+        }
+
+        /* -------- STATIC FRONTEND -------- */
+
+        if (req.method === "GET" && !url.startsWith("/api")) {
+            if (serveStatic(url, res)) return;
         }
 
         /* -------- 404 -------- */
